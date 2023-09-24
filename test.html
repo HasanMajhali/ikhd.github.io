@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speed Test</title>
+</head>
+<body>
+    <h1>Speed Test</h1>
+    <button id="start-button">Start Test</button>
+    <p id="result"></p>
+
+    <script>
+        document.getElementById('start-button').addEventListener('click', function() {
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', 'https://speedtest.saudi.net.sa:8080/', true); // Replace with an actual speed test server URL.
+            xhr.responseType = 'json';
+
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    const speedData = xhr.response;
+                    const downloadSpeed = speedData.downloadSpeed;
+                    const uploadSpeed = speedData.uploadSpeed;
+
+                    document.getElementById('result').innerHTML = `
+                        Download Speed: ${downloadSpeed} Mbps<br>
+                        Upload Speed: ${uploadSpeed} Mbps
+                    `;
+                } else {
+                    document.getElementById('result').innerHTML = 'Speed test failed.';
+                }
+            };
+
+            xhr.send();
+        });
+    </script>
+</body>
+</html>
