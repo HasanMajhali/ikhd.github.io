@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Speed Test</title>
+    <script src="https://cdn.jsdelivr.net/npm/speedtest-net@2.1.6/dist/index.js"></script>
 </head>
 <body>
     <h1>Speed Test</h1>
@@ -11,27 +12,17 @@
     <p id="result"></p>
 
     <script>
-        document.getElementById('start-button').addEventListener('click', function() {
-            const xhr = new XMLHttpRequest();
-            xhr.open('GET', 'https://speedtest.saudi.net.sa:8080/', true); // Replace with an actual speed test server URL.
-            xhr.responseType = 'json';
+        document.getElementById('start-button').addEventListener('click', function () {
+            const speedTest = new Speedtest();
 
-            xhr.onload = function() {
-                if (xhr.status === 200) {
-                    const speedData = xhr.response;
-                    const downloadSpeed = speedData.downloadSpeed;
-                    const uploadSpeed = speedData.uploadSpeed;
-
-                    document.getElementById('result').innerHTML = `
-                        Download Speed: ${downloadSpeed} Mbps<br>
-                        Upload Speed: ${uploadSpeed} Mbps
-                    `;
-                } else {
-                    document.getElementById('result').innerHTML = 'Speed test failed.';
-                }
+            speedTest.onupdate = (data) => {
+                document.getElementById('result').innerHTML = `
+                    Download Speed: ${data.download} Mbps<br>
+                    Upload Speed: ${data.upload} Mbps
+                `;
             };
 
-            xhr.send();
+            speedTest.start();
         });
     </script>
 </body>
