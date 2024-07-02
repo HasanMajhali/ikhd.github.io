@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ping Script</title>
+    <title>Ping Simulation</title>
 </head>
 <body>
     <button id="pingButton">Ping</button>
@@ -15,7 +15,7 @@
 
         function ping() {
             let xhr = new XMLHttpRequest();
-            xhr.open("GET", "https://8.8.8.8", true);
+            xhr.open("GET", "https://api.ipify.org?format=json", true);
             xhr.onreadystatechange = function () {
                 if (xhr.readyState == 4) {
                     let status = xhr.status == 200 ? "Success" : "Fail";
