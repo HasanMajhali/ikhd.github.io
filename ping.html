@@ -22,6 +22,9 @@
                     logStatus(`Ping: ${status}`);
                 }
             }
+            xhr.onerror = function () {
+                logStatus("Ping: Fail");
+            }
             xhr.send();
         }
 
@@ -34,7 +37,7 @@
         }
 
         document.getElementById('pingButton').addEventListener('click', function() {
-            pingInterval = setInterval(pping, 1000);
+            pingInterval = setInterval(ping, 1000);
         });
 
         document.getElementById('stopButton').addEventListener('click', function() {
