@@ -13,19 +13,15 @@
     <script>
         let pingInterval;
 
-        function ping() {
-            let xhr = new XMLHttpRequest();
-            xhr.open("GET", "https://api.ipify.org?format=json", true);
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState == 4) {
-                    let status = xhr.status == 200 ? "Success" : "Fail";
-                    logStatus(`Ping: ${status}`);
-                }
-            }
-            xhr.onerror = function () {
+        async function ping() {
+            try {
+                let response = await fetch('/ping?target=8.8.8.8');
+                let result = await response.json();
+                let status = result.alive ? "Success" : "Fail";
+                logStatus(`Ping: ${status}, Time: ${result.time} ms`);
+            } catch (error) {
                 logStatus("Ping: Fail");
             }
-            xhr.send();
         }
 
         function logStatus(message) {
